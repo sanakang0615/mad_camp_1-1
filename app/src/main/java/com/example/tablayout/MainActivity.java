@@ -3,16 +3,9 @@ package com.example.tablayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Gallery;
-import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
-
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.AddFragment(new FragmentContact(), "Contact");
         adapter.AddFragment(new FragmentGallery(), "Gallery");
-        adapter.AddFragment(new FragmentFree(), "Free");
+        adapter.AddFragment(new FragmentVoiceRecord(), "TTS");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
