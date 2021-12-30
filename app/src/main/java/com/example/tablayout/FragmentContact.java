@@ -2,6 +2,7 @@ package com.example.tablayout;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,33 +48,6 @@ public class FragmentContact extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InitializeContact();
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-    /*
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-        contactList.add(new Contact("Aaron Jones", "(111) 251236211"));
-        contactList.add(new Contact("chan Jones", "(02) 251236211"));
-        contactList.add(new Contact("park Jones", "(031) 251236211"));
-    */
-
     }
 
     public void InitializeContact() {
@@ -86,16 +60,9 @@ public class FragmentContact extends Fragment {
 
     private String getJsonString() {
         String json = "";
-        InputStream is = null;
-        AssetManager am = null;
         try {
-            am = getResources().getAssets();
-        } catch (Exception e) {
-            e.printStackTrace();
-            contactList.add(new Contact("chan Jones", "exception"));
-        }
-        try {
-            is = getActivity().getAssets().open("contact.json");
+            AssetManager am = getResources().getAssets();
+            InputStream is = getActivity().getAssets().open("contact.json");
             int fileSize = is.available();
 
             byte[] buffer = new byte[fileSize];
@@ -104,7 +71,7 @@ public class FragmentContact extends Fragment {
 
             json = new String(buffer, "UTF-8");
         } catch (Exception e) {
-            contactList.add(new Contact("fff", "exception"));
+            e.printStackTrace();
         }
         return json;
     }

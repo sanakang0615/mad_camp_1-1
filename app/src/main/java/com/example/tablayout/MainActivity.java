@@ -3,9 +3,12 @@ package com.example.tablayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
