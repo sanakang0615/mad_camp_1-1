@@ -16,13 +16,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm)
     {
         super(fm);
-        fragmentList.add(new Contact());
-        fragmentList.add(new Gallery());
-        fragmentList.add(new Free());
-
-        tabName.add("Contact");
-        tabName.add("Gallery");
-        tabName.add("Free");
     }
 
     @Nullable
@@ -45,4 +38,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return fragmentList.size();
     }
 
+    public void AddFragment(Fragment fragment, String title){
+        fragmentList.add(fragment);
+        tabName.add(title);
+    }
 }

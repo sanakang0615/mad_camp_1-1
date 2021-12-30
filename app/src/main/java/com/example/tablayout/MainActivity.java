@@ -9,18 +9,24 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    ViewPager viewPager;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        adapter.AddFragment(new FragmentContact(), "Contact");
+        adapter.AddFragment(new FragmentGallery(), "Gallery");
+        adapter.AddFragment(new FragmentFree(), "Free");
+
+        viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 }
