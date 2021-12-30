@@ -5,6 +5,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Gallery;
+import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 
