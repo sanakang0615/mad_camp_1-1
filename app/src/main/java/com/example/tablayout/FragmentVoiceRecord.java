@@ -1,5 +1,7 @@
 package com.example.tablayout;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,7 +9,9 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,9 +28,13 @@ import java.util.ArrayList;
 
 public class FragmentVoiceRecord extends Fragment implements View.OnClickListener {
     View v;
+    private Intent intent;
+    private TextView log;
+
+    public static final int REQUEST_CODE = 2;
 
     public FragmentVoiceRecord() {
-        // Required empty public constructor
+
     }
 
 
@@ -38,9 +46,10 @@ public class FragmentVoiceRecord extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_voice_record, container, false);
-
         FloatingActionButton fab = v.findViewById(R.id.fab);
+        log = v.findViewById(R.id.tvVoice);
         fab.setOnClickListener(this);
+
         return v;
     }
 
@@ -50,7 +59,6 @@ public class FragmentVoiceRecord extends Fragment implements View.OnClickListene
             case R.id.fab:
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
                 VoiceTask voiceTask = new VoiceTask();
                 voiceTask.execute();
                 break;
@@ -66,9 +74,13 @@ public class FragmentVoiceRecord extends Fragment implements View.OnClickListene
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
             try {
-                getVoice();
+                intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+                startActivityForResult(intent, REQUEST_CODE);
             } catch (Exception e) {
-                // TODO: handle exception
+                e.printStackTrace();
             }
             return str;
         }
@@ -83,58 +95,21 @@ public class FragmentVoiceRecord extends Fragment implements View.OnClickListene
         }
     }
 
-    private void getVoice() {
-
-        Intent intent = new Intent();
-        intent.setAction(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
-        String language = "ko-KR";
-
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        startActivityForResult(intent, 2);
-
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
 
             ArrayList<String> results = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
             String str = results.get(0);
-            Toast.makeText(getBaseContext(), str, Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
 
-            TextView tv = findViewById(R.id.tvVoice);
+            TextView tv = v.findViewById(R.id.tvVoice);
             tv.setText(str);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }

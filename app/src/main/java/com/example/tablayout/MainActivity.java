@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.AddFragment(new FragmentContact(), "Contact");
         adapter.AddFragment(new FragmentGallery(), "Gallery");
-        adapter.AddFragment(new FragmentVoiceRecord(), "TTS");
+        adapter.AddFragment(new FragmentVoiceRecord(), "Voice");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
